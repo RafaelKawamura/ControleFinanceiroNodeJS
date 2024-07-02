@@ -1,33 +1,33 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Category } from './category.entity';
-import { CategoryCreateDto, CategoryUpdateDto } from '../Dto/Category.Dto';
+import { Spender } from './spender.entity';
+import { SpenderCreateDto,SpenderUpdateDto } from 'src/Dto/Spender.Dto';
 import { resultDto } from '../Dto/result.dto';
 
 @Injectable()
-export class CategoryService {
+export class SpenderService {
   constructor(
-    @Inject('CATEGORY_REPOSITORY')
-    private categoryRepository: Repository<Category>,
+    @Inject('SPENDER_REPOSITORY')
+    private spenderRepository: Repository<Spender>,
   ) {}
 
-  async findById(category_id: number): Promise<Category> {
-    const findCategory = await this.categoryRepository.findOneBy({
-      category_id,
+  async findById(spender_id: number): Promise<Spender> {
+    const findSpender = await this.spenderRepository.findOneBy({
+      spender_id,
     });
-    return findCategory;
+    return findSpender;
   }
 
-  async findAll(): Promise<Category[]> {
-    const findAll = await this.categoryRepository.find();
+  async findAll(): Promise<Spender[]> {
+    const findAll = await this.spenderRepository.find();
     return findAll;
   }
 
-  async create(data: CategoryCreateDto): Promise<resultDto> {
-    const category = new Category();
-    category.category_name = data.category_name;
-    return this.categoryRepository
-      .save(category)
+  async create(data: SpenderCreateDto): Promise<resultDto> {
+    const spender = new Spender();
+    spender.spender_name = data.spender_name;
+    return this.spenderRepository
+      .save(spender)
       .then(() => {
         return <resultDto>{
           status: true,
@@ -44,10 +44,10 @@ export class CategoryService {
 
   async update(
     id: number,
-    categoryUpdateDto: CategoryUpdateDto,
+    spenderUpdateDto: SpenderUpdateDto,
   ): Promise<resultDto> {
-    return this.categoryRepository
-      .update(id, categoryUpdateDto)
+    return this.spenderRepository
+      .update(id, spenderUpdateDto)
       .then(() => {
         return <resultDto>{
           status: true,
@@ -65,7 +65,7 @@ export class CategoryService {
   async delete(
     id: number
   ): Promise<resultDto> {
-    return this.categoryRepository
+    return this.spenderRepository
       .delete(id)
       .then(() => {
         return <resultDto>{
@@ -78,6 +78,6 @@ export class CategoryService {
           status: false,
           message: 'FAIL',
         };
-      });
+      });;
   }
 }
