@@ -26,10 +26,10 @@ export class CategoryService {
   async create(data: CategoryCreateDto): Promise<resultDto> {
     const category = new Category();
     category.category_name = data.category_name;
-    const newCategory = this.categoryRepository.save(category)
+    const newCategory = this.categoryRepository.save(category);
     return <resultDto>{
           status: true,
-          message: 'success!'+(await newCategory).category_id,
+          message: 'Category '+data.category_name+' registered on id: '+(await newCategory).category_id,
         };
     }
 

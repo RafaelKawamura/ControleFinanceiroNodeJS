@@ -5,10 +5,14 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  PrimaryColumn,
 } from 'typeorm';
 
 @Entity()
 export class ExpenseCategory {
+    
+    @PrimaryColumn()
+    expense_id: number;
 
     @ManyToOne(() => Expense, (expense) => expense.expense_category, {
         onDelete: "CASCADE"
@@ -18,6 +22,9 @@ export class ExpenseCategory {
     })
     expense: Expense;
   
+    @PrimaryColumn()
+    category_id: number;
+    
     @ManyToOne(() => Category, (category) => category.expense_category, {
         onDelete: "CASCADE"
       })
