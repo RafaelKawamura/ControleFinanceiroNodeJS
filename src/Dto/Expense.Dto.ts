@@ -1,5 +1,8 @@
-import { Expense } from "src/Expense/expense.entity";
+import { Category } from "src/Category/category.entity";
+import { Spender } from "src/Spender/spender.entity";
 
 export class ExpenseCreateDto {
-    expenseDTO: Expense;
+  spender: Spender;
+  expense_date: Date;
+  expense_val: number;
   }

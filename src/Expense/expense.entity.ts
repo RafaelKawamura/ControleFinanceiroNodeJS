@@ -1,4 +1,5 @@
 import { Category } from 'src/Category/category.entity';
+import { ExpenseCategory } from 'src/ExpenseCategory/expensecategory.entity';
 import { Spender } from 'src/Spender/spender.entity';
 import {
   Entity,
@@ -10,6 +11,7 @@ import {
   ManyToOne,
   JoinTable,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -34,19 +36,8 @@ export class Expense {
   })
   expense_val: number;
   
-  @ManyToMany(() => Category, (category) => category.expenses)
-  @JoinTable({
-      name: "expense_categories",
-      joinColumn: {
-          name: "expense_id",
-          referencedColumnName: "expense_id"
-      },
-      inverseJoinColumn: {
-          name: "category_id",
-          referencedColumnName: "category_id"
-      }
-  })
-  categories: Category[];
+  @OneToMany(() => ExpenseCategory, (expense_category) => expense_category.expense)
+  expense_category: ExpenseCategory[];
 
   @Column({ length: 500 })
   expense_desc: string;

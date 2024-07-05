@@ -1,4 +1,5 @@
 import { Expense } from 'src/Expense/expense.entity';
+import { ExpenseCategory } from 'src/ExpenseCategory/expensecategory.entity';
 import {
   Entity,
   Column,
@@ -23,6 +24,6 @@ export class Category {
   @UpdateDateColumn()
   updated_date: Date;
 
-  @ManyToMany(() => Expense, (expense) => expense.categories)
-  expenses: Expense[];
+  @OneToMany(() => ExpenseCategory, (expense_category) => expense_category.category)
+  expense_category: ExpenseCategory[];
 }

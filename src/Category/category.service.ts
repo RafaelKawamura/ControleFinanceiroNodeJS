@@ -26,21 +26,12 @@ export class CategoryService {
   async create(data: CategoryCreateDto): Promise<resultDto> {
     const category = new Category();
     category.category_name = data.category_name;
-    return this.categoryRepository
-      .save(category)
-      .then(() => {
-        return <resultDto>{
+    const newCategory = this.categoryRepository.save(category)
+    return <resultDto>{
           status: true,
-          message: 'success!',
+          message: 'success!'+(await newCategory).category_id,
         };
-      })
-      .catch(() => {
-        return <resultDto>{
-          status: false,
-          message: 'category already exists!',
-        };
-      });
-  }
+    }
 
   async update(
     id: number,

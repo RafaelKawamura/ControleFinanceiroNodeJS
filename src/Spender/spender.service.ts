@@ -37,7 +37,7 @@ export class SpenderService {
       .catch(() => {
         return <resultDto>{
           status: false,
-          message: 'category already exists!',
+          message: 'spender already exists!',
         };
       });
   }
