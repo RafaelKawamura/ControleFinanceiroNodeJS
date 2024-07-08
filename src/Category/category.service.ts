@@ -26,12 +26,20 @@ export class CategoryService {
   async create(data: CategoryCreateDto): Promise<resultDto> {
     const category = new Category();
     category.category_name = data.category_name;
-    const newCategory = this.categoryRepository.save(category);
-    return <resultDto>{
-          status: true,
-          message: 'Category '+data.category_name+' registered on id: '+(await newCategory).category_id,
-        };
+    try{
+      const newCategory = this.categoryRepository.save(category)
+      return <resultDto>{
+        status: 201,
+        message: 'Category '+data.category_name+' registered on id: '+(await newCategory).category_id,
+      }
     }
+    catch(error:any){
+      return <resultDto>{
+        status: 400,
+        message: 'Creation failed: '+error
+      }
+    }
+  }
 
   async update(
     id: number,
@@ -41,14 +49,15 @@ export class CategoryService {
       .update(id, categoryUpdateDto)
       .then(() => {
         return <resultDto>{
-          status: true,
-          message: 'SUCCESS!',
+          status: 201,
+          message: 'Category updated!',
         };
       })
-      .catch(() => {
+      .catch((error:any) => {
         return <resultDto>{
-          status: false,
-          message: 'FAIL',
+          status: 400,
+          message: 'Update failed',
+          data: error
         };
       });
   }
@@ -60,14 +69,14 @@ export class CategoryService {
       .delete(id)
       .then(() => {
         return <resultDto>{
-          status: true,
-          message: 'SUCCESS!',
+          status: 201,
+          message: 'Category deleted!',
         };
       })
-      .catch(() => {
+      .catch((error:any) => {
         return <resultDto>{
-          status: false,
-          message: 'FAIL',
+          status: 400,
+          message: 'Deletion failed: '+error,
         };
       });
   }

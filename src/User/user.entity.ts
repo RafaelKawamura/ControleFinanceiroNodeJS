@@ -1,30 +1,38 @@
-import { Expense } from 'src/Expense/expense.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  Column,
 } from 'typeorm';
 
 @Entity()
-export class Spender {
+export class User {
   @PrimaryGeneratedColumn()
-  spender_id: number;
+  user_id: number;
+
+  @Column({
+    length: 100,
+    unique: true,
+    nullable: false
+  })
+  email: string;
+ 
+  @Column({
+    length: 300,
+    nullable: false
+  })
+  user_name: string;
 
   @Column({
     length: 300,
     nullable: false
   })
-  spender_name: string;
+  password: string;
 
   @CreateDateColumn()
   created_date: Date;
 
   @UpdateDateColumn()
   updated_date: Date;
-
-  @OneToMany(() => Expense, (expense) => expense.spender)
-  expense: Expense[];
 }

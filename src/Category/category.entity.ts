@@ -1,13 +1,11 @@
-import { Expense } from 'src/Expense/expense.entity';
 import { ExpenseCategory } from 'src/ExpenseCategory/expensecategory.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToMany,
+  Column,
 } from 'typeorm';
 
 @Entity()
@@ -15,8 +13,12 @@ export class Category {
   @PrimaryGeneratedColumn()
   category_id: number;
 
-  @Column({ length: 500, unique: true })
-  category_name: string;
+  @Column({
+    length: 100,
+    unique: true,
+    nullable: false
+  })
+  category_name: string; 
 
   @CreateDateColumn()
   created_date: Date;

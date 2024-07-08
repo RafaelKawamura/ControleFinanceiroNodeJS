@@ -30,13 +30,13 @@ export class SpenderService {
       .save(spender)
       .then(() => {
         return <resultDto>{
-          status: true,
+          status: 201,
           message: 'success!',
         };
       })
       .catch(() => {
         return <resultDto>{
-          status: false,
+          status: 400,
           message: 'spender already exists!',
         };
       });
@@ -50,13 +50,13 @@ export class SpenderService {
       .update(id, spenderUpdateDto)
       .then(() => {
         return <resultDto>{
-          status: true,
+          status: 201,
           message: 'SUCCESS!',
         };
       })
       .catch(() => {
         return <resultDto>{
-          status: false,
+          status: 400,
           message: 'FAIL',
         };
       });
@@ -69,13 +69,13 @@ export class SpenderService {
       .delete(id)
       .then(() => {
         return <resultDto>{
-          status: true,
+          status: 201,
           message: 'SUCCESS!',
         };
       })
       .catch(() => {
         return <resultDto>{
-          status: false,
+          status: 400,
           message: 'FAIL',
         };
       });;
