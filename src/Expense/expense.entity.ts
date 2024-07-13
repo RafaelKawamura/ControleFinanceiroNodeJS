@@ -1,17 +1,15 @@
-import { Category } from 'src/Category/category.entity';
 import { ExpenseCategory } from 'src/ExpenseCategory/expensecategory.entity';
+import { ExpenseTag } from 'src/ExpenseTag/expensetag.entity';
 import { Spender } from 'src/Spender/spender.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
   ManyToOne,
-  JoinTable,
   JoinColumn,
   OneToMany,
+  Column,
 } from 'typeorm';
 
 @Entity()
@@ -21,25 +19,35 @@ export class Expense {
 
   @ManyToOne(() => Spender, (spender) => spender.expense, {
     onDelete: "CASCADE"
+    ,nullable: false
   })
   @JoinColumn({
       name: "spender_id"
   })
   spender: Spender;
 
-  @CreateDateColumn()
+  @Column({
+    nullable: false
+  })
   expense_date: Date;
 
   @Column('numeric', {
     precision: 7,
-    scale: 2
+    scale: 2,
+    nullable: false
   })
   expense_val: number;
   
   @OneToMany(() => ExpenseCategory, (expense_category) => expense_category.expense)
   expense_category: ExpenseCategory[];
+  
+  @OneToMany(() => ExpenseTag, (expense_tag) => expense_tag.tag)
+  expense_tag: ExpenseTag[];
 
-  @Column({ length: 500 })
+  @Column({
+    length: 500,
+    nullable: false
+  })
   expense_desc: string;
 
   @CreateDateColumn()

@@ -24,26 +24,34 @@ export class ExpenseService {
   }
 
   async create(data: ExpenseCreateDto): Promise<resultDto> {
-    const expense = new Expense();
-    expense.spender = data.spender;
-    expense.expense_date = data.expense_date;
-    expense.expense_val = data.expense_val;
-    const newExpense = this.expenseRepository.save(expense);
-  
-    return this.expenseRepository
-      .save(expense)
-      .then(() => {
-        return <resultDto>{
-          status: true,
-          message: 'success!',
-        };
-      })
-      .catch(() => {
-        return <resultDto>{
-          status: false,
-          message: 'spender already exists!',
-        };
-      });
+    try{
+      const expense = new Expense();
+      expense.spender = data.spender;
+      expense.expense_date = data.expense_date;
+      expense.expense_val = data.expense_val;
+      const newExpense = this.expenseRepository.save(expense);
+    
+      return this.expenseRepository
+        .save(expense)
+        .then(() => {
+          return <resultDto>{
+            status: 201,
+            message: 'success!',
+          };
+        })
+        .catch(() => {
+          return <resultDto>{
+            status: 400,
+            message: 'spender already exists!',
+          };
+        });
+    }
+    catch (error: any){
+      return <resultDto>{
+        status: 400,
+        message: 'spender already exists!',
+      };
+    }
   }
 
 }

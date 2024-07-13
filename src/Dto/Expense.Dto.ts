@@ -1,4 +1,3 @@
-import { Category } from "src/Category/category.entity";
 import { Spender } from "src/Spender/spender.entity";
 
 export class ExpenseCreateDto {

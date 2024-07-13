@@ -1,5 +1,5 @@
 export class resultDto {
-  status: boolean;
+  status: number;
   message: string;
   data?: object;
 }
