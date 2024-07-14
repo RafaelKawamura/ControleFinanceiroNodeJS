@@ -7,7 +7,7 @@ import { resultDto } from 'src/Dto/result.dto';
 @Injectable()
 export class ExpenseTagService {
   constructor(
-    @Inject('EXPENSETAG_REPOSITORY')
+    @Inject('EXPENSECATEGORY_REPOSITORY')
     private expenseTagRepository: Repository<ExpenseTag>,
   ) {}
 
@@ -22,4 +22,24 @@ export class ExpenseTagService {
     const findAll = await this.expenseTagRepository.find();
     return findAll;
   }
+
+  async create(data: ExpenseTagCreateDto): Promise<resultDto> {
+    const expenseTag = new ExpenseTag();
+    expenseTag.tag_id = data.tag_id;
+    expenseTag.expense_id = data.expense_id;
+    return await this.expenseTagRepository.save(expenseTag)
+    .then((result) =>{
+      return <resultDto>{
+        status: 201,
+        message: 'Success!',
+      }
+    })
+    .catch((error)=>{
+      return <resultDto>{
+        status: 400,
+        message: 'Failed: '+error
+      }
+    })
+  }
+
 }

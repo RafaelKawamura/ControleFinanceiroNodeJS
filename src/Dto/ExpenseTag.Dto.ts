@@ -1,5 +1,5 @@
 export class ExpenseTagCreateDto {
     expense_id: number;
-    tag: Array<string>;
+    tag_id: number;
     // product_category: string;
   }

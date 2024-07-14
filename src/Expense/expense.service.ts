@@ -27,10 +27,20 @@ export class ExpenseService {
     try{
       const expense = new Expense();
       expense.spender = data.spender;
+      expense.category = data.category;
       expense.expense_date = data.expense_date;
       expense.expense_val = data.expense_val;
+      expense.expense_desc = data.expense_desc;
       const newExpense = this.expenseRepository.save(expense);
-    
+      // if (data.categories.length>0){
+      //   expenseCategoryService: ExpenseCategoryService
+      //   const expenseCateogry = new ExpenseCategory
+      //   expenseCateogry.expense_id = (await newExpense).expense_id
+      //   for (const category of data.categories){
+      //     expenseCateogry.category_id = category
+      //     expenseCategoryService.create(expenseCateogry)
+      //   }
+      // }
       return this.expenseRepository
         .save(expense)
         .then(() => {

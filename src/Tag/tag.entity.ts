@@ -1,4 +1,4 @@
-import { Expense } from 'src/Expense/expense.entity';
+import { ExpenseTag } from 'src/ExpenseTag/expensetag.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,16 +9,16 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Category {
+export class Tag {
   @PrimaryGeneratedColumn()
-  category_id: number;
+  tag_id: number;
 
   @Column({
     length: 100,
     unique: true,
     nullable: false
   })
-  category_name: string; 
+  tag_name: string; 
 
   @CreateDateColumn()
   created_date: Date;
@@ -26,6 +26,6 @@ export class Category {
   @UpdateDateColumn()
   updated_date: Date;
 
-  @OneToMany(() => Expense, (expense) => expense.category)
-  expense: Expense[];
+  @OneToMany(() => ExpenseTag, (expense_tag) => expense_tag.tag)
+  expense_tag: ExpenseTag[];
 }

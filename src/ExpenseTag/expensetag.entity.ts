@@ -1,4 +1,5 @@
 import { Expense } from 'src/Expense/expense.entity';
+import { Tag } from 'src/Tag/tag.entity';
 import {
   Entity,
   CreateDateColumn,
@@ -21,11 +22,17 @@ export class ExpenseTag {
     })
     expense: Expense;
   
-    @PrimaryColumn({
-      length: 50
-    })
-    tag: string;
+    @PrimaryColumn()
+    tag_id: number;
     
+    @ManyToOne(() => Tag, (tag) => tag.expense_tag, {
+        onDelete: "CASCADE"
+      })
+    @JoinColumn({
+        name: "tag_id"
+    })
+    tag: Tag;
+
     @CreateDateColumn()
     created_date: Date;
 }

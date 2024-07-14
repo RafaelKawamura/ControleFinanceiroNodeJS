@@ -1,4 +1,4 @@
-import { ExpenseCategory } from 'src/ExpenseCategory/expensecategory.entity';
+import { Category } from 'src/Category/category.entity';
 import { ExpenseTag } from 'src/ExpenseTag/expensetag.entity';
 import { Spender } from 'src/Spender/spender.entity';
 import {
@@ -38,10 +38,16 @@ export class Expense {
   })
   expense_val: number;
   
-  @OneToMany(() => ExpenseCategory, (expense_category) => expense_category.expense)
-  expense_category: ExpenseCategory[];
+  @ManyToOne(() => Category, (category) => category.expense, {
+    onDelete: "CASCADE"
+    ,nullable: false
+  })
+  @JoinColumn({
+    name: "category_id"
+  })
+  category: Category;
   
-  @OneToMany(() => ExpenseTag, (expense_tag) => expense_tag.tag)
+  @OneToMany(() => ExpenseTag, (expense_tag) => expense_tag.expense)
   expense_tag: ExpenseTag[];
 
   @Column({
