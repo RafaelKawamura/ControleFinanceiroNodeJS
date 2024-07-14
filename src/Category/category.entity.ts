@@ -16,9 +16,9 @@ export class Category {
   @Column({
     length: 100,
     unique: true,
-    nullable: false
+    nullable: false,
   })
-  category_name: string; 
+  category_name: string;
 
   @CreateDateColumn()
   created_date: Date;

@@ -18,41 +18,41 @@ export class Expense {
   expense_id: number;
 
   @ManyToOne(() => Spender, (spender) => spender.expense, {
-    onDelete: "CASCADE"
-    ,nullable: false
+    onDelete: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({
-      name: "spender_id"
+    name: 'spender_id',
   })
   spender: Spender;
 
   @Column({
-    nullable: false
+    nullable: false,
   })
   expense_date: Date;
 
   @Column('numeric', {
     precision: 7,
     scale: 2,
-    nullable: false
+    nullable: false,
   })
   expense_val: number;
-  
+
   @ManyToOne(() => Category, (category) => category.expense, {
-    onDelete: "CASCADE"
-    ,nullable: false
+    onDelete: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({
-    name: "category_id"
+    name: 'category_id',
   })
   category: Category;
-  
+
   @OneToMany(() => ExpenseTag, (expense_tag) => expense_tag.expense)
   expense_tag: ExpenseTag[];
 
   @Column({
     length: 500,
-    nullable: false
+    nullable: false,
   })
   expense_desc: string;
 
@@ -61,5 +61,4 @@ export class Expense {
 
   @UpdateDateColumn()
   updated_date: Date;
-
 }

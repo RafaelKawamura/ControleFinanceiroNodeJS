@@ -1,7 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { ExpenseTag } from './expensetag.entity';
-import { ExpenseTagCreateDto } from 'src/Dto/ExpenseTag.Dto';
+import {
+  ExpenseTagCreateDto,
+  ExpenseTagInsertDto,
+} from 'src/Dto/ExpenseTag.Dto';
 import { resultDto } from 'src/Dto/result.dto';
 
 @Injectable()
@@ -27,19 +30,45 @@ export class ExpenseTagService {
     const expenseTag = new ExpenseTag();
     expenseTag.tag_id = data.tag_id;
     expenseTag.expense_id = data.expense_id;
-    return await this.expenseTagRepository.save(expenseTag)
-    .then((result) =>{
-      return <resultDto>{
-        status: 201,
-        message: 'Success!',
-      }
-    })
-    .catch((error)=>{
-      return <resultDto>{
-        status: 400,
-        message: 'Failed: '+error
-      }
-    })
+    return await this.expenseTagRepository
+      .save(expenseTag)
+      .then(() => {
+        return <resultDto>{
+          status: 201,
+          message: 'Success!',
+        };
+      })
+      .catch((error) => {
+        return <resultDto>{
+          status: 400,
+          message: 'Failed: ' + error,
+        };
+      });
   }
 
+  async insert(data: Array<ExpenseTagInsertDto>): Promise<resultDto> {
+    const expenseTags = new Array<ExpenseTag>();
+    let i = 0;
+    console.log(data);
+    for (const eTag of data) {
+      console.log('test', eTag);
+      expenseTags[i].expense_id = eTag.expense_id;
+      expenseTags[i].tag_id = eTag.tag_id;
+      i += 1;
+    }
+    return await this.expenseTagRepository
+      .insert(expenseTags)
+      .then(() => {
+        return <resultDto>{
+          status: 201,
+          message: 'Success!',
+        };
+      })
+      .catch((error) => {
+        return <resultDto>{
+          status: 400,
+          message: 'Failed: ' + error,
+        };
+      });
+  }
 }
