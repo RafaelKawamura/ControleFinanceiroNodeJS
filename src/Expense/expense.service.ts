@@ -3,6 +3,8 @@ import { Repository } from 'typeorm';
 import { Expense } from './expense.entity';
 import { ExpenseCreateDto } from 'src/Dto/Expense.Dto';
 import { resultDto } from 'src/Dto/result.dto';
+import { ExpenseTag } from 'src/ExpenseTag/expensetag.entity';
+import { ExpenseTagService } from 'src/ExpenseTag/expensetag.service';
 
 @Injectable()
 export class ExpenseService {
@@ -24,13 +26,22 @@ export class ExpenseService {
   }
 
   async create(data: ExpenseCreateDto): Promise<resultDto> {
-    try{
+    try {
       const expense = new Expense();
       expense.spender = data.spender;
+      expense.category = data.category;
       expense.expense_date = data.expense_date;
       expense.expense_val = data.expense_val;
+      expense.expense_desc = data.expense_desc;
       const newExpense = this.expenseRepository.save(expense);
-    
+      // if (data.tags.length > 0) {
+      //   const expenseTag = new ExpenseTag();
+      //   expenseTag.expense_id = (await newExpense).expense_id;
+      //   for (const tag of data.tags) {
+      //     expenseTag.tag_id = tag;
+      //     ExpenseTagService.create(expenseTag);
+      //   }
+      // }
       return this.expenseRepository
         .save(expense)
         .then(() => {
@@ -45,13 +56,11 @@ export class ExpenseService {
             message: 'spender already exists!',
           };
         });
-    }
-    catch (error: any){
+    } catch (error: any) {
       return <resultDto>{
         status: 400,
         message: 'spender already exists!',
       };
     }
   }
-
 }

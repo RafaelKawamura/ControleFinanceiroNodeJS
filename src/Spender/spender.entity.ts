@@ -15,7 +15,7 @@ export class Spender {
 
   @Column({
     length: 300,
-    nullable: false
+    nullable: false,
   })
   spender_name: string;
 
