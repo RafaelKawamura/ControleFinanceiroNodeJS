@@ -7,10 +7,10 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CategoryService } from './category.service';
-import { Category } from './category.entity';
-import { resultDto } from '../Dto/result.dto';
-import { CategoryCreateDto, CategoryUpdateDto } from '../Dto/Category.Dto';
+import { CategoryService } from '../service/category.service';
+import { Category } from '../entity/category.entity';
+import { resultDto } from '../dto/result.dto';
+import { CategoryCreateDto, CategoryUpdateDto } from '../dto/category.dto';
 
 @Controller('/category')
 export class CategoryController {
