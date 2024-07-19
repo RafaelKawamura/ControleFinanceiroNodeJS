@@ -1,4 +1,4 @@
-export class resultDto {
+export class ResultDto {
   status: number;
   message: string;
   data?: object;

@@ -1,9 +1,10 @@
+//import { Expense } from 'src/Expense/expense.entity';
 import { Base } from 'src/entity/base.entity';
 import { Entity, OneToMany, Column } from 'typeorm';
-import { Expense } from './expense.entity';
+import { ExpenseTag } from './expense_tag.entity';
 
 @Entity()
-export class Category extends Base {
+export class Tag extends Base {
   constructor(data) {
     super();
     Object.assign(this, data);
@@ -13,8 +14,8 @@ export class Category extends Base {
     unique: true,
     nullable: false,
   })
-  category_name: string;
+  tag_name: string;
 
-  @OneToMany(() => Expense, (expense) => expense.category)
-  expense: Expense[];
+  @OneToMany(() => ExpenseTag, (expense_tag) => expense_tag.tag)
+  expense_tag: ExpenseTag[];
 }

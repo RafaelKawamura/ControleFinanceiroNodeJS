@@ -3,7 +3,7 @@ import { Entity, OneToMany, Column } from 'typeorm';
 import { Expense } from './expense.entity';
 
 @Entity()
-export class Category extends Base {
+export class User extends Base {
   constructor(data) {
     super();
     Object.assign(this, data);
@@ -13,7 +13,19 @@ export class Category extends Base {
     unique: true,
     nullable: false,
   })
-  category_name: string;
+  email: string;
+
+  @Column({
+    length: 300,
+    nullable: false,
+  })
+  user_name: string;
+
+  @Column({
+    length: 300,
+    nullable: false,
+  })
+  password: string;
 
   @OneToMany(() => Expense, (expense) => expense.category)
   expense: Expense[];

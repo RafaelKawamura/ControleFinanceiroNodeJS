@@ -3,7 +3,7 @@ import { Category } from '../entity/category.entity';
 import { CategoryRepository } from '../repository/category.repository';
 import { BaseService } from 'src/service/base.service';
 import { CategoryCreateDto, CategoryUpdateDto } from '../dto/category.dto';
-import { resultDto } from '../dto/result.dto';
+import { ResultDto } from '../dto/result.dto';
 
 @Injectable()
 export class CategoryService extends BaseService<Category> {
@@ -21,14 +21,14 @@ export class CategoryService extends BaseService<Category> {
     return findCategory;
   }
 
-  async create(data: CategoryCreateDto): Promise<resultDto> {
+  async create(data: CategoryCreateDto): Promise<ResultDto> {
     const category = this.categoryRepository.create({
       category_name: data.category_name,
     });
     return await this.categoryRepository
       .save(category)
       .then(() => {
-        return <resultDto>{
+        return <ResultDto>{
           status: 201,
           message:
             'Category ' +
@@ -38,7 +38,7 @@ export class CategoryService extends BaseService<Category> {
         };
       })
       .catch((error) => {
-        return <resultDto>{
+        return <ResultDto>{
           status: 400,
           message: 'Creation failed: ' + error,
         };
@@ -48,17 +48,17 @@ export class CategoryService extends BaseService<Category> {
   async update(
     id: number,
     categoryUpdateDto: CategoryUpdateDto,
-  ): Promise<resultDto> {
+  ): Promise<ResultDto> {
     return this.categoryRepository
       .update(id, categoryUpdateDto)
       .then(() => {
-        return <resultDto>{
+        return <ResultDto>{
           status: 201,
           message: 'Category updated!',
         };
       })
       .catch((error: any) => {
-        return <resultDto>{
+        return <ResultDto>{
           status: 400,
           message: 'Update failed',
           data: error,
@@ -66,17 +66,17 @@ export class CategoryService extends BaseService<Category> {
       });
   }
 
-  async delete(id: number): Promise<resultDto> {
+  async delete(id: number): Promise<ResultDto> {
     return this.categoryRepository
-      .delete(id)
+      .softDelete(id)
       .then(() => {
-        return <resultDto>{
+        return <ResultDto>{
           status: 201,
           message: 'Category deleted!',
         };
       })
       .catch((error: any) => {
-        return <resultDto>{
+        return <ResultDto>{
           status: 400,
           message: 'Deletion failed: ' + error,
         };
