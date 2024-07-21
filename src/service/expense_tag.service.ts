@@ -41,8 +41,4 @@ export class ExpenseTagService extends BaseService<ExpenseTag> {
         };
       });
   }
-
-  async delete(expense_id: number, tag_id: number): Promise<ResultDto> {
-    return await this.expenseTagRepository.cfSoftDelete(expense_id, tag_id);
-  }
 }

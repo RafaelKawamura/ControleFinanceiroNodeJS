@@ -13,7 +13,7 @@ export class Expense extends Base {
     Object.assign(this, data);
   }
   @ManyToOne(() => Spender, (spender) => spender.expense, {
-    onDelete: 'CASCADE',
+    //onDelete: 'CASCADE', if enable will delete all expenses of that spender
     nullable: false,
   })
   @JoinColumn({
@@ -22,8 +22,8 @@ export class Expense extends Base {
   spender: Spender;
 
   @ManyToOne(() => Category, (category) => category.expense, {
-    onDelete: 'CASCADE',
-    nullable: false,
+    //onDelete: 'CASCADE', if enable will delete all expenses of that category
+    nullable: true,
   })
   @JoinColumn({
     name: 'category_id',
@@ -44,12 +44,12 @@ export class Expense extends Base {
 
   @Column({
     length: 500,
-    nullable: false,
+    nullable: true,
   })
   expense_desc: string;
 
   @ManyToOne(() => User, (user) => user.expense, {
-    onDelete: 'CASCADE',
+    //onDelete: 'CASCADE', if enables it will delete all expenses of that user
     nullable: false,
   })
   @JoinColumn({

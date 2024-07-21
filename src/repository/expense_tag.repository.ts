@@ -16,27 +16,24 @@ export class ExpenseTagRepository extends BaseRepository<ExpenseTag> {
     );
   }
 
-  async cfSoftDelete(expense_id: number, tag_id: number): Promise<ResultDto> {
-    await this.expenseTagRepository
+  async cfClearTags(expense_id: number): Promise<ResultDto> {
+    return await this.expenseTagRepository
       .createQueryBuilder()
       .delete()
-      .from('ExpenseTag')
-      .where('expense_id = :expense_id', { expense_id: expense_id })
-      .andWhere('tag_id = :tag_id', { tag_id: tag_id })
-      .andWhere('deleted_at is null')
+      .from(ExpenseTag)
+      .where('expense_id = :expense_id', { expense_id })
       .execute()
       .then(() => {
         return <ResultDto>{
-          status: 201,
-          message: 'ExpenseTag deleted!',
+          status: 200,
+          message: 'Tags deleted on id: ' + expense_id,
         };
       })
-      .catch((error: any) => {
+      .catch((error) => {
         return <ResultDto>{
           status: 400,
           message: 'Deletion failed: ' + error,
         };
       });
-    return <ResultDto>{ status: 503, message: 'Something went wrong' };
   }
 }

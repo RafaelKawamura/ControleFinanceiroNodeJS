@@ -9,6 +9,25 @@ import { Category } from './entity/category.entity';
 import { Base } from './entity/base.entity';
 import { CategoryRepository } from './repository/category.repository';
 import * as dotenv from 'dotenv';
+import { Tag } from './entity/tag.entity';
+import { TagController } from './controller/tag.controller';
+import { TagRepository } from './repository/tag.repository';
+import { Expense } from './entity/expense.entity';
+import { Spender } from './entity/spender.entity';
+import { User } from './entity/user.entity';
+import { ExpenseTag } from './entity/expense_tag.entity';
+import { TagService } from './service/tag.service';
+import { SpenderService } from './service/spender.service';
+import { SpenderRepository } from './repository/spender.repository';
+import { UserService } from './service/user.service';
+import { UserRepository } from './repository/user.repository';
+import { UserController } from './controller/user.controller';
+import { SpenderController } from './controller/spender.controller';
+import { ExpenseController } from './controller/expense.controller';
+import { ExpenseService } from './service/expense.service';
+import { ExpenseRepository } from './repository/expense.repository';
+import { ExpenseTagService } from './service/expense_tag.service';
+import { ExpenseTagRepository } from './repository/expense_tag.repository';
 
 dotenv.config();
 @Module({
@@ -23,10 +42,45 @@ dotenv.config();
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Base, Category]),
+    TypeOrmModule.forFeature([
+      Base,
+      Category,
+      Tag,
+      Expense,
+      Spender,
+      User,
+      ExpenseTag,
+    ]),
   ],
-  controllers: [AppController, CategoryController],
-  providers: [AppService, CategoryService, CategoryRepository],
+  controllers: [
+    AppController,
+    CategoryController,
+    TagController,
+    SpenderController,
+    UserController,
+    ExpenseController,
+  ],
+  providers: [
+    AppService,
+    // Category
+    CategoryService,
+    CategoryRepository,
+    // Tag
+    TagService,
+    TagRepository,
+    // Spender
+    SpenderService,
+    SpenderRepository,
+    // User
+    UserService,
+    UserRepository,
+    // Expense
+    ExpenseService,
+    ExpenseRepository,
+    // ExpenseTag
+    ExpenseTagService,
+    ExpenseTagRepository,
+  ],
 })
 export class AppModule implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly em: EntityManager) {}
