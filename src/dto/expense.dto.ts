@@ -14,3 +14,5 @@ export class ExpenseCreateDto {
 }
 
 export class ExpenseUpdateDto extends ExpenseCreateDto {}
+
+export class ExpenseTagsResultDto extends ExpenseCreateDto {}
