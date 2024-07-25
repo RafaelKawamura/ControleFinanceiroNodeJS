@@ -3,7 +3,12 @@ import { Expense } from '../entity/expense.entity';
 import { ExpenseRepository } from '../repository/expense.repository';
 import { ExpenseTagRepository } from '../repository/expense_tag.repository';
 import { BaseService } from 'src/service/base.service';
-import { ExpenseCreateDto, ExpenseTagsResultDto, ExpenseUpdateDto } from '../dto/expense.dto';
+import {
+  ExpenseCreateDto,
+  ExpenseTagsResultDto,
+  ExpenseTagsResultDto2,
+  ExpenseUpdateDto,
+} from '../dto/expense.dto';
 import { ResultDto } from '../dto/result.dto';
 
 @Injectable()
@@ -15,8 +20,9 @@ export class ExpenseService extends BaseService<Expense> {
     super(expenseRepository);
   }
 
-  async findAll(): Promise<Expense[]> {
-    const findAll = await this.expenseRepository.find({
+  async findAll(): Promise<ExpenseTagsResultDto2[]> {
+    let expenseWithTags = new ExpenseTagsResultDto2();
+    expenseWithTags.expense = await this.expenseRepository.find({
       relations: {
         spender: true,
         category: true,
