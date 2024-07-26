@@ -12,7 +12,21 @@ export class ExpenseTagService extends BaseService<ExpenseTag> {
   }
 
   async findAll(): Promise<ExpenseTag[]> {
-    const findAll = await this.expenseTagRepository.find();
+    const findAll = await this.expenseTagRepository.find({
+      relations: {
+        expense: true,
+        tag: true,
+      },
+      select: {
+        id: true,
+        expense: {
+          expense_desc: true,
+        },
+        tag: {
+          tag_name: true,
+        },
+      },
+    });
     return findAll;
   }
 

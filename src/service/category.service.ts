@@ -25,6 +25,30 @@ export class CategoryService extends BaseService<Category> {
     const category = this.categoryRepository.create({
       category_name: data.category_name,
     });
+    const findCategory = await this.categoryRepository.findOne({
+      where: { category_name: category.category_name },
+      withDeleted: true,
+    });
+    if (findCategory != null) {
+      return await this.categoryRepository
+        .restore(findCategory.id)
+        .then(() => {
+          return <ResultDto>{
+            status: 201,
+            message:
+              'Category ' +
+              data.category_name +
+              ' restored on id: ' +
+              findCategory.id,
+          };
+        })
+        .catch((error) => {
+          return <ResultDto>{
+            status: 400,
+            message: 'Restoration failed: ' + error,
+          };
+        });
+    }
     return await this.categoryRepository
       .save(category)
       .then(() => {
