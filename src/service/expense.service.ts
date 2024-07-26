@@ -20,13 +20,15 @@ export class ExpenseService extends BaseService<Expense> {
     super(expenseRepository);
   }
 
-  async findAll(): Promise<ExpenseTagsResultDto2[]> {
-    let expenseWithTags = new ExpenseTagsResultDto2();
-    expenseWithTags.expense = await this.expenseRepository.find({
+  async findAll(): Promise<Expense[]> {
+    //let expenseWithTags = new ExpenseTagsResultDto2();
+    //expenseWithTags.expense
+    const findAll = await this.expenseRepository.find({
       relations: {
         spender: true,
         category: true,
         user: true,
+        expense_tag: { tag: true },
       },
       select: {
         id: true,
@@ -34,13 +36,23 @@ export class ExpenseService extends BaseService<Expense> {
         expense_date: true,
         expense_val: true,
         spender: {
+          id: true,
           spender_name: true,
         },
         category: {
+          id: true,
           category_name: true,
         },
         user: {
+          id: true,
           user_name: true,
+        },
+        expense_tag: {
+          id: true,
+          tag: {
+            id: true,
+            tag_name: true,
+          },
         },
       },
     });
