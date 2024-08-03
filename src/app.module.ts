@@ -28,6 +28,7 @@ import { ExpenseService } from './service/expense.service';
 import { ExpenseRepository } from './repository/expense.repository';
 import { ExpenseTagService } from './service/expense_tag.service';
 import { ExpenseTagRepository } from './repository/expense_tag.repository';
+import { AuthModule } from './auth/auth.module';
 
 dotenv.config();
 @Module({
@@ -51,6 +52,7 @@ dotenv.config();
       User,
       ExpenseTag,
     ]),
+    AuthModule,
   ],
   controllers: [
     AppController,
