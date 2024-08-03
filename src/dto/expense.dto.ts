@@ -1,4 +1,5 @@
 import { Category } from 'src/entity/category.entity';
+import { Expense } from 'src/entity/expense.entity';
 import { Spender } from 'src/entity/spender.entity';
 import { Tag } from 'src/entity/tag.entity';
 import { User } from 'src/entity/user.entity';
@@ -14,3 +15,10 @@ export class ExpenseCreateDto {
 }
 
 export class ExpenseUpdateDto extends ExpenseCreateDto {}
+
+export class ExpenseTagsResultDto extends ExpenseCreateDto {}
+
+export class ExpenseTagsResultDto2 {
+  expense: Expense;
+  tags: Array<Tag>;
+}
