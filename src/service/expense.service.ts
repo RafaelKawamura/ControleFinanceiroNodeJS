@@ -3,7 +3,12 @@ import { Expense } from '../entity/expense.entity';
 import { ExpenseRepository } from '../repository/expense.repository';
 import { ExpenseTagRepository } from '../repository/expense_tag.repository';
 import { BaseService } from 'src/service/base.service';
-import { ExpenseCreateDto, ExpenseUpdateDto } from '../dto/expense.dto';
+import {
+  ExpenseCreateDto,
+  ExpenseTagsResultDto,
+  ExpenseTagsResultDto2,
+  ExpenseUpdateDto,
+} from '../dto/expense.dto';
 import { ResultDto } from '../dto/result.dto';
 
 @Injectable()
@@ -16,8 +21,47 @@ export class ExpenseService extends BaseService<Expense> {
   }
 
   async findAll(): Promise<Expense[]> {
-    const findAll = await this.expenseRepository.find();
+    //let expenseWithTags = new ExpenseTagsResultDto2();
+    //expenseWithTags.expense
+    const findAll = await this.expenseRepository.find({
+      relations: {
+        spender: true,
+        category: true,
+        user: true,
+        expense_tag: { tag: true },
+      },
+      select: {
+        id: true,
+        expense_desc: true,
+        expense_date: true,
+        expense_val: true,
+        spender: {
+          id: true,
+          spender_name: true,
+        },
+        category: {
+          id: true,
+          category_name: true,
+        },
+        user: {
+          id: true,
+          user_name: true,
+        },
+        expense_tag: {
+          id: true,
+          tag: {
+            id: true,
+            tag_name: true,
+          },
+        },
+      },
+    });
     return findAll;
+  }
+
+  async findAllWithTags(): Promise<ExpenseTagsResultDto[]> {
+    const findAllWithTags = await this.expenseRepository.cfExpenseTags();
+    return findAllWithTags;
   }
 
   async findById(id: number): Promise<Expense> {

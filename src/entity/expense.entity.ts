@@ -14,7 +14,7 @@ export class Expense extends Base {
   }
   @ManyToOne(() => Spender, (spender) => spender.expense, {
     //onDelete: 'CASCADE', if enable will delete all expenses of that spender
-    nullable: false,
+    nullable: true,
   })
   @JoinColumn({
     name: 'spender_id',
