@@ -28,7 +28,9 @@ import { ExpenseService } from './service/expense.service';
 import { ExpenseRepository } from './repository/expense.repository';
 import { ExpenseTagService } from './service/expense_tag.service';
 import { ExpenseTagRepository } from './repository/expense_tag.repository';
-import { AuthModule } from './auth/auth.module';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
+import { LocalStrategy } from './auth/strategies/local.strategy';
 
 dotenv.config();
 @Module({
@@ -52,10 +54,12 @@ dotenv.config();
       User,
       ExpenseTag,
     ]),
-    AuthModule,
+    // AuthModule,
+    // UserModule,
   ],
   controllers: [
     AppController,
+    AuthController,
     CategoryController,
     TagController,
     SpenderController,
@@ -64,6 +68,9 @@ dotenv.config();
   ],
   providers: [
     AppService,
+    // Auth
+    AuthService,
+    LocalStrategy,
     // Category
     CategoryService,
     CategoryRepository,
