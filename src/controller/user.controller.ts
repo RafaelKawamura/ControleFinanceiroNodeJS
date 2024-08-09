@@ -10,7 +10,11 @@ import {
 import { UserService } from '../service/user.service';
 import { User } from '../entity/user.entity';
 import { ResultDto } from '../dto/result.dto';
-import { UserCreateDto, UserUpdateDto } from '../dto/user.dto';
+import {
+  CreateUserDtoTest,
+  // UserCreateDto,
+  UserUpdateDto,
+} from '../dto/user.dto';
 
 @Controller('/user')
 export class UserController {
@@ -26,8 +30,19 @@ export class UserController {
     return findID;
   }
 
-  @Post('/create')
-  async create(@Body() data: UserCreateDto): Promise<ResultDto> {
+  // @Post('/create')
+  // async create(@Body() data: UserCreateDto): Promise<ResultDto> {
+  //   return this.userService.create(data);
+  // }
+
+  @Get('/findEmailTest')
+  async findByEmail(
+    @Body() data: CreateUserDtoTest,
+  ): Promise<CreateUserDtoTest> {
+    return this.userService.findByEmail(data.email);
+  }
+  @Post('/createtest')
+  async create(@Body() data: CreateUserDtoTest): Promise<CreateUserDtoTest> {
     return this.userService.create(data);
   }
 
