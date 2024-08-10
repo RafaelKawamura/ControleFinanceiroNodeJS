@@ -31,6 +31,7 @@ import { ExpenseTagRepository } from './repository/expense_tag.repository';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { LocalStrategy } from './auth/strategies/local.strategy';
+import { JwtModule } from '@nestjs/jwt';
 
 dotenv.config();
 @Module({
@@ -54,8 +55,11 @@ dotenv.config();
       User,
       ExpenseTag,
     ]),
-    // AuthModule,
-    // UserModule,
+    // Auth
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '30d' },
+    }),
   ],
   controllers: [
     AppController,
